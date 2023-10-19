@@ -1,6 +1,5 @@
 # Struts2 S2-059 원격 코드 실행 취약점 (Remote Code Execution Vulnerablity(CVE-2019-0230))
 
-
 Apache Struts 프레임워크는 ID 속성과 같은 특정 태그의 속성 값을 2차적으로 분석하므로 공격자가 태그 속성을 나타낼 때 다시 분석될 OGNL 표현을 전달하여 OGNL 표현을 주입할 수 있습니다.이로 인해 코드가 원격으로 실행될 수 있습니다.
 
 Affected Version: Struts 2.0.0 - Struts 2.5.20
@@ -18,13 +17,16 @@ Start the Struts 2.5.16 환경:
 docker compose up -d
 ```
 
+
 환경 설정 후, `http://{나의 ip주소}:8080/?id=1`에 가보면 Struts2 test page를 볼 수 있다.
 ![1.png](1.png)
+
 ## Exploit
 
 `http://{나의 ip주소}:8080/?id=%25%7B233*233%7D`에 방문해보면 id 속성에서 233*233 결과과 반환된 것을 확인 가능
 즉, 이 표현식을 사용한 주요 목적은 Struts2이 사용자 제공 입력을 OGNL 표현식으로 해석하고 실행하는지 여부를 확인하는 것. 만약 사용자가 제공한 입력 값인 233*233이 평가되어서 결과 값인 54289로 반환된다면, 애플리케이션은 OGNL 표현식 주입 취약점이 있음을 알 수 있음.
-*변경 확인 방법은 개발자 도구를 통해 확인 가능
+변경 확인 방법은 개발자 도구를 통해 확인 가능
+
 ![2.png](2.png)
 ![3.png](3.png)
 ![4.png](4.png)
@@ -32,7 +34,10 @@ docker compose up -d
 
 [OGNL Apache Struts exploit: Weaponizing a sandbox bypass (CVE-2018-11776)](https://securitylab.github.com/research/ognl-apache-struts-exploit-CVE-2018-11776)(참고 자료)를 통해 Struts 2.5.16.의 OGNL sandbox bypass의 세부사항을 알 수 있습니다.
 
+
+
 취약점 증명용 간단한 파이썬 POC:
+
 
 ```python
 import requests  # requests 모듈을 불러옴
@@ -67,7 +72,9 @@ res2 = requests.post(url, data=data2)
 
 ```
 
+
 해당 POC를 실행하면 `touch /tmp/successbywhs1hyeongyu`가 실행이 된다.:
+
 ![5.png](5.png)
 ![6.png](6.png)
 ![7.png](7.png)
