@@ -1,6 +1,6 @@
 # Struts2 S2-059 원격 코드 실행 취약점 (Remote Code Execution Vulnerablity(CVE-2019-0230))
 
-Apache Struts 프레임워크는 ID 속성과 같은 특정 태그의 속성 값을 2차적으로 분석하므로 공격자가 태그 속성을 나타낼 때 다시 분석될 OGNL 표현을 전달하여 OGNL 표현을 주입할 수 있습니다.이로 인해 코드가 원격으로 실행될 수 있습니다.
+Apache Struts2 프레임워크는 ID 속성과 같은 특정 태그의 속성 값을 2차적으로 분석하므로 공격자가 태그 속성을 나타낼 때 다시 분석될 OGNL 표현을 전달하여 OGNL 표현을 주입할 수 있습니다.이로 인해 코드가 원격으로 실행될 수 있습니다.
 
 Affected Version: Struts 2.0.0 - Struts 2.5.20
 
@@ -19,6 +19,7 @@ docker compose up -d
 
 
 환경 설정 후, `http://{나의 ip주소}:8080/?id=1`에 가보면 Struts2 test page를 볼 수 있다.
+
 ![1.png](1.png)
 
 ## Exploit
@@ -36,7 +37,7 @@ docker compose up -d
 
 
 
-취약점 증명용 간단한 파이썬 POC:
+## 취약점 증명용 간단한 파이썬 POC
 
 
 ```python
